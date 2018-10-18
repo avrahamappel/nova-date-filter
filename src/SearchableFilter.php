@@ -2,11 +2,7 @@
 
 namespace R64\Filters;
 
-use Laravel\Nova\Filters\Filter;
-use Illuminate\Container\Container;
-use Illuminate\Http\Request;
-
-abstract class SearchableFilter extends Filter
+abstract class SearchableFilter extends CustomFilter
 {
     /**
      * Prepare the filter for JSON serialization.
@@ -16,9 +12,17 @@ abstract class SearchableFilter extends Filter
     public function jsonSerialize()
     {
         return array_merge(parent::jsonSerialize(), [
-            'customComponent' => true,
-            'component'       => 'searchable-filter',
-            'label'           => 'name',
+            'label' => 'name',
         ]);
+    }
+
+    /**
+     * The name of the Vue component to be used for this filter
+     *
+     * @return string
+     */
+    protected function componentName()
+    {
+        return 'searchable-filter';
     }
 }
